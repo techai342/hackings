@@ -1,0 +1,80 @@
+import React from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import AutoTerminal from './AutoTerminal'
+import BioScan from './BioScan'
+import ChatBot from './ChatBot'
+import DNASequencer from './DNASequencer'
+import ExploitKit from './ExploitKit'
+import HackerOS from './HackerOS'
+import IPInterceptor from './IPInterceptor'
+import MedicalCore from './MedicalCore'
+import RadarHub from './RadarHub'
+import TacticalMap from './TacticalMap'
+import WorldTracker from './WorldTracker'
+import Biometrics from './Biometrics'
+import CryptCracker from './CryptCracker'
+import DataTransfer from './DataTransfer'
+import Earth3D from './Earth3D'
+import EarthScanner from './EarthScanner'
+import FaceID from './FaceID'
+import FileExplorer from './FileExplorer'
+import Decryptor from './Decryptor'
+
+interface MainDashboardProps {
+  activeApp: string | null;
+}
+
+const MainDashboard: React.FC<MainDashboardProps> = ({ activeApp }) => {
+  const getActiveComponent = () => {
+    switch (activeApp) {
+      case 'terminal': return <AutoTerminal />;
+      case 'world': return <WorldTracker />;
+      case 'bioscan': return <BioScan />;
+      case 'neural': return <MedicalCore />;
+      case 'data': return <DataTransfer />;
+      case 'security': return <IPInterceptor />;
+      case 'system': return <HackerOS />;
+      case 'crypto': return <CryptCracker />;
+      case 'network': return <TacticalMap />;
+      case 'satellite': return <EarthScanner />;
+      default: return <DefaultView />;
+    }
+  }
+
+  return (
+    <div className="h-full p-4 overflow-auto">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeApp || 'default'}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="h-full"
+        >
+          {getActiveComponent()}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )
+}
+
+const DefaultView = () => {
+  return (
+    <div className="h-full grid grid-cols-2 gap-4">
+      <div className="col-span-2 grid grid-cols-3 gap-4 mb-4">
+        <AutoTerminal />
+        <BioScan />
+        <ChatBot />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <ExploitKit />
+        <HackerOS />
+        <IPInterceptor />
+        <RadarHub />
+      </div>
+    </div>
+  )
+}
+
+export default MainDashboard
