@@ -1,0 +1,96 @@
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom'
+import { Terminal, Cpu, Database, Globe, Fingerprint, Shield, Activity, Wifi, Brain, Key } from 'lucide-react'
+import WelcomeScreen from './components/WelcomeScreen'
+import MainDashboard from './components/MainDashboard'
+import './App.css'
+
+function App() {
+  const [bootComplete, setBootComplete] = useState(false)
+  const [activeApp, setActiveApp] = useState<string | null>(null)
+
+  const handleBootComplete = () => {
+    setBootComplete(true)
+  }
+
+  if (!bootComplete) {
+    return <WelcomeScreen onComplete={handleBootComplete} />
+  }
+
+  return (
+    <Router>
+      <div className="h-screen bg-black text-white font-mono overflow-hidden flex">
+        {/* Sidebar Navigation */}
+        <div className="w-20 border-r border-[#00ff41]/20 bg-black/90 flex flex-col items-center py-6 space-y-8 z-50">
+          <div className="text-center">
+            <div className="w-10 h-10 bg-[#00ff41] rounded-full flex items-center justify-center mb-2">
+              <Terminal size={24} className="text-black" />
+            </div>
+            <div className="text-[8px] text-[#00ff41] font-bold tracking-widest">KALI-NET</div>
+          </div>
+
+          <nav className="flex-1 space-y-6">
+            <SidebarIcon icon={<Terminal />} label="Terminal" app="terminal" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Globe />} label="World Map" app="world" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Fingerprint />} label="Bio Scan" app="bioscan" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Brain />} label="Neural Link" app="neural" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Database />} label="Data Core" app="data" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Shield />} label="Security" app="security" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Cpu />} label="System" app="system" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Key />} label="Crypto" app="crypto" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Activity />} label="Network" app="network" activeApp={activeApp} onClick={setActiveApp} />
+            <SidebarIcon icon={<Wifi />} label="Satellite" app="satellite" activeApp={activeApp} onClick={setActiveApp} />
+          </nav>
+
+          <div className="text-center">
+            <div className="w-6 h-6 bg-red-500/20 border border-red-500 rounded-full flex items-center justify-center mb-2">
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="text-[6px] text-red-500 font-bold tracking-widest">ARMED</div>
+          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-hidden">
+          <Routes>
+            <Route path="/" element={<MainDashboard activeApp={activeApp} />} />
+            <Route path="/terminal" element={<div className="p-4"><h2>Terminal</h2></div>} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  )
+}
+
+const SidebarIcon = ({ 
+  icon, 
+  label, 
+  app, 
+  activeApp, 
+  onClick 
+}: { 
+  icon: React.ReactNode; 
+  label: string; 
+  app: string; 
+  activeApp: string | null; 
+  onClick: (app: string) => void 
+}) => {
+  const isActive = activeApp === app
+  return (
+    <Link 
+      to="/" 
+      onClick={() => onClick(app)}
+      className={`flex flex-col items-center p-2 rounded-lg transition-all duration-300 group ${isActive ? 'bg-[#00ff41]/10 border border-[#00ff41]/30' : 'hover:bg-white/5'}`}
+    >
+      <div className={`text-2xl mb-1 ${isActive ? 'text-[#00ff41]' : 'text-white/40 group-hover:text-[#00ff41]/60'}`}>
+        {icon}
+      </div>
+      <div className={`text-[6px] font-bold uppercase tracking-widest ${isActive ? 'text-[#00ff41]' : 'text-white/30 group-hover:text-white/60'}`}>
+        {label}
+      </div>
+    </Link>
+  )
+}
+
+export default App
