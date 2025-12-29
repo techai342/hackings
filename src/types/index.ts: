@@ -1,0 +1,36 @@
+export interface FileData {
+  id: string;
+  name: string;
+  size: string;
+  type: 'archive' | 'key' | 'log' | 'executable';
+  date: string;
+}
+
+export interface Message {
+  id: string;
+  role: 'user' | 'model';
+  text: string;
+  timestamp: string;
+}
+
+export interface LogEntry {
+  id: number;
+  ip: string;
+  loc: string;
+  status: string;
+  port: number;
+}
+
+export interface CityData {
+  id: number;
+  name: string;
+  lat: string;
+  lng: string;
+  img: string;
+  stats: {
+    pop: string;
+    grid: string;
+    nodes: number;
+    threat: string;
+  };
+}
